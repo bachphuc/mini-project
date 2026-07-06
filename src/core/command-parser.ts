@@ -1,3 +1,4 @@
+import { createTaskHandler } from "../handles/task-handlers";
 import { createUserHandler } from "../handles/user-handles";
 
 export type CmdAction = 'CreateUser' | 'CreateTask' | 'CreateProject' | 'CreateEpic' | 'UpdateUser' | 'UpdateTask' | 'UpdateProject' | 'UpdateEpic' | 'DeleteUser' | 'DeleteTask' | 'DeleteProject' | 'DeleteEpic';
@@ -28,7 +29,7 @@ function parseCreateUserCommand(text: string): CmdRS | null {
 
 function parseCreateTaskCommand(text: string): CmdRS | null {
   // prompt: "Create task with title 'Task Title' and description 'Task Description'"
-  const regex = /Create task with title '(.+)' and description '(.+)'/;
+  const regex = /Create[ ]+task[ ]+with[ ]+title[ ]+'(.+)'[ ]+and[ ]+description[ ]+'(.+)'/i;
   const match = text.match(regex);
 
   if (!match) {
@@ -60,6 +61,7 @@ export function translateRequest(text: string) {
       break;
     case 'CreateTask':
       console.log(`Creating task with title: ${cmd.data.title} and description: ${cmd.data.description}`);
+      createTaskHandler(cmd.data);
       break;
     default:
       console.log("Unknown command action.");
