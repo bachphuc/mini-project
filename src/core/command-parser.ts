@@ -1,7 +1,7 @@
 import { createTaskHandler } from "../handles/task-handlers";
 import { createUserHandler } from "../handles/user-handles";
 
-export type CmdAction = 'CreateUser' | 'CreateTask' | 'CreateProject' | 'CreateEpic' | 'UpdateUser' | 'UpdateTask' | 'UpdateProject' | 'UpdateEpic' | 'DeleteUser' | 'DeleteTask' | 'DeleteProject' | 'DeleteEpic';
+export type CmdAction = 'CreateUser' | 'CreateTask' | 'CreateProject' | 'CreateEpic' | 'UpdateUser' | 'UpdateTask' | 'UpdateProject' | 'UpdateEpic' | 'DeleteUser' | 'DeleteTask' | 'DeleteProject' | 'DeleteEpic' | 'AssignTask';
 
 interface CmdRS {
   action: CmdAction;
@@ -44,10 +44,28 @@ function parseCreateTaskCommand(text: string): CmdRS | null {
   };
 }
 
+function parseAssignTaskCommand(text: string): CmdRS | null {
+  // prompt: "Assign task with id '1' to user with id '2'"
+  const regex = /Assign[ ]+task[ ]+with[ ]+id[ ]+'(\d+)'[ ]+to[ ]+user[ ]+with[ ]+id[ ]+'(\d+)'/i;
+  const match = text.match(regex);  
+
+  if (!match) {
+    return null;
+  }
+
+  return {
+    action: 'AssignTask',
+    data: {
+      taskId: parseInt(match[1]),
+      userId: parseInt(match[2])
+    }
+  };
+}
+
 export function translateRequest(text: string) {
   // Implementation for translating the request
 
-  var cmd = parseCreateUserCommand(text) || parseCreateTaskCommand(text);
+  var cmd = parseCreateUserCommand(text) || parseCreateTaskCommand(text) || parseAssignTaskCommand(text);
 
   if(!cmd){
     console.log("No valid command found in the request.");

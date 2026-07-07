@@ -25,6 +25,7 @@ export interface Project{
 export interface Task{
   id: number;
   title: string;
+  code?: string;
   description: string;
   status: TaskStatus;
   createdUserID: number;
