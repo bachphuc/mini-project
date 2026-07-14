@@ -22,20 +22,26 @@ export interface Project{
   createdUserID: number;
 }
 
+export type TaskType = 'Task' | 'Bug' | 'Feature';
+
 export interface Task{
   id: number;
   title: string;
   code?: string;
   description: string;
-  status: TaskStatus;
+  type?: TaskType;
+  status?: TaskStatus;
   createdUserID: number;
   assignedUserID: number;
+  parentTaskID?: number;
   epicID?: number;
   projectID?: number;
   estimatedTimeInMinutes?: number;
-  deadlineDate?: Date;
+  expectedDeadlineDate?: Date;
   startDate?: Date;
   completedDate?: Date;
   dependencyTaskIDs?: number[];
+  autoEstimationEndDate?: Date;
+  order?: number;
 }
 

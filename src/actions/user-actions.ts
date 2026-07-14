@@ -1,8 +1,8 @@
-import { generateID, getData, saveData } from "../core/data.service";
-import { User } from "../models/models";
+import { generateID, getDataStore, commitDataStore } from "../core/data.service";
+import { User } from "../models/entity-models";
 
 export function createUser(user: User): User {
-  const _data = getData();
+  const _data = getDataStore();
   const newUser: User = {
     id: user.id || 0,
     name: user.name,
@@ -19,7 +19,7 @@ export function createUser(user: User): User {
     }
     newUser.id = generateID();
     _data.users.push(newUser);
-    saveData();
+    commitDataStore();
   }
   else{
     console.log(`User with ID ${newUser.id} already exists. Skipping creation.`);

@@ -22,10 +22,10 @@ export function initData() {
   }
 }
 
-export function saveData(){
+export function commitDataStore(){
   jsonToFile(DATA_FILE_PATH, _data);
 }
 
-export function getData(): DataStore {
+export function getDataStore(): DataStore {
   return _data;
 }

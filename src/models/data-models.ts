@@ -1,4 +1,4 @@
-import { Epic, Task, User, Project } from "./models";
+import { Epic, Task, User, Project } from "./entity-models";
 
 export interface DataStore{
   incrementalID: number;
