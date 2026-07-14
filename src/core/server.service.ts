@@ -1,5 +1,6 @@
 import express, { type Express, type Request, type Response } from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import { translateRequest } from './command-parser';
 import { getDataStore } from './data.service';
 import { createTask, filterTasks, getTaskDetail, updateTask } from '../actions/task-actions';
@@ -9,6 +10,8 @@ const SERVER_PORT: number = parseInt(process.env.PORT || `${DEFAULT_PORT}`) || D
 
 export default function startServer() {
   const app: Express = express();
+
+  app.use(cors());
 
   // parse application/x-www-form-urlencoded
   app.use(bodyParser.urlencoded());
